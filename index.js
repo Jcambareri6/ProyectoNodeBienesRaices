@@ -5,6 +5,8 @@ import csurf from 'csurf'
 import cookieParser from 'cookie-parser'
 import usuarioRouter from './routes/usuarioRouter.js'
 import propiedadesRoutes from './routes/propiedadesRoutes.js'
+import appRoutes from './routes/appRoutes.js'
+import apiRoutes from './routes/apiRoutes.js'
 import db from './config/db.js'
 
 
@@ -40,10 +42,11 @@ app.use(express.static('public'))
 let user= "joaquin"
 //definir un puerto y arrancar el proyecto 
 const port =  process.env.PORT || 3000
-
+app.use('/',appRoutes)
 app.use('/auth', usuarioRouter)
 app.use('/',propiedadesRoutes)
-app.use
+app.use('/api',apiRoutes)
+
 
 app.listen(port, () =>{
     console.log(`hola soy ${user} `)

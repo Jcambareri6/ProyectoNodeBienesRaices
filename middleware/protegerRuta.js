@@ -11,7 +11,7 @@ const ProtegerRuta = async ( req,res,next) => {
    // comprobar el token 
  try {
     const decoded = Jwt.verify(_token,process.env.JWT_KEY)
-    console.log("hola")
+   
     const Usuario =  await usuario.scope('eliminarPassword').findByPk(decoded.id)
    
     // almacenar el usuario en el request 

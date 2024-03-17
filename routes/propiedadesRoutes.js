@@ -1,8 +1,9 @@
 import express from 'express'
-import {admin,crear,Guardar,agregarImagen,AlmacenarImagen,editar,GuardarCambios,eliminarPropiedad,mostrarPropiedad} from '../Controllers/propiedadesController.js'
+import {admin,crear,Guardar,agregarImagen,AlmacenarImagen,editar,ModificarEstadoPropiedad,GuardarCambios,eliminarPropiedad,mostrarPropiedad,enviarMensaje,verMensajes} from '../Controllers/propiedadesController.js'
 import { body } from 'express-validator'
 import ProtegerRuta from '../middleware/protegerRuta.js'
-import {  Upload } from '../middleware/subirImg.js';
+import {  Upload } from '../middleware/subirImg.js'
+import identificarUsuario from '../middleware/IdentificarUsuario.js'
 
 
 
@@ -34,11 +35,15 @@ body('Habitaciones').isNumeric().withMessage('Seleccione la  cantidad de habitac
 body('Estacionamiento').isNumeric().withMessage('Seleccione la  cantidad de Estacionamiento'),
 body('Banios').isNumeric().withMessage('Seleccione la cantidad de baños '),
  GuardarCambios)
+ router.put('/propiedades/:id',ProtegerRuta,ModificarEstadoPropiedad)
  router.post('/propiedades/eliminar-propiedad/:id',ProtegerRuta,eliminarPropiedad)
  
 //AREA PUBLICA
-router.get('/propiedades/mostrar-propiedad/:id', mostrarPropiedad)
+router.get('/propiedades/mostrar-propiedad/:id', identificarUsuario, mostrarPropiedad)
 
+router.post('/propiedades/mostrar-propiedad/:id', identificarUsuario, body('mensaje').isLength({min:10}).withMessage('el mensaje no puede ir vacio o es muy corto'),enviarMensaje)
+
+router.get('/Mensajes/:id',ProtegerRuta,verMensajes)
  
 
 

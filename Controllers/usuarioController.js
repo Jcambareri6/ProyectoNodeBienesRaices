@@ -73,6 +73,9 @@ const formularioRegistro = (req, res) => {
         csrfToken: req.csrfToken(),
     })
 }
+const cerrarSesion = async (req,res) =>{
+    return res.clearCookie('_token').status(200).redirect('/auth/login')
+}
 const registrar = async (req, res) => {
     await check('nombre').notEmpty().withMessage('el nombre es obligatorio').run(req)
     await check('email').isEmail().withMessage(' email invalido').run(req)
@@ -260,6 +263,7 @@ const nuevoPassword =  async (req,res)=>{
 export {
     FormularioLogin,
     autenticar,
+    cerrarSesion,
     formularioRegistro,
     registrar,
     formularioPaswordOlvidado,

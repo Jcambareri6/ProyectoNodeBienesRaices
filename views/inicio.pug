@@ -1,0 +1,44 @@
+extends ./layout/app
+
+block styles
+    link(rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css")
+
+block contenido 
+    div(class="py-5")
+        h1(class="text-center text-4xl font-extrabold") Ubicacion en el mapa 
+
+        div(class="flex flex-col md:flex-row items-center py-10 gap-4")
+            // Filter by categories
+            div(class="flex items-center gap-2")
+                h2(class="text-sm uppercase text-gray-800 font-bold") Filtrar Propiedades:
+                label(for="categorias" class="text-sm uppercase text-gray-500 font-bold") Categorias
+                select(id="categorias" class="bg-white px-3 py-2 border border-gray-300 rounded-md shadow")
+                    option(value="") -Seleccione-
+                    each categoria in categorias 
+                        option(value=categoria.id)=categoria.nombre
+
+            // Filter by price
+            div(class="flex items-center gap-2")
+                label(for="Precios" class="text-sm uppercase text-gray-500 font-bold") Precio
+                select(id="Precios" class="bg-white px-3 py-2 border border-gray-300 rounded-md shadow")
+                    option(value="") -Seleccione-
+                    each Precio in precios 
+                        option(value=Precio.id)=Precio.nombre
+
+        div(id="mapa-inicio" class="h-[600px] mt-5")
+
+        section(class="py-5")
+            h2(class="text-center text-4xl font-extrabold pt-10") Casas En Venta
+            div(class="grid grid-cols-1 lg:grid-cols-3 gap-5  mt-14 ")
+                each propiedad in casas 
+                   include ./templates/card
+        section(class="py-5")
+            h2(class="text-center text-4xl font-extrabold pt-10") Departamentos En Venta
+            div(class="grid grid-cols-1 lg:grid-cols-3 gap-5  mt-14 ")
+                each propiedad in departamentos 
+                    include ./templates/card
+            //- pre=JSON.stringify(casas,undefined,2)
+
+    block scripts
+        script(src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js")
+        script(src="/js/mapaInicio.js")
